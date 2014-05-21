@@ -70,12 +70,13 @@ module Statesman
         callbacks[phase] << Callback.new(from: from, to: to, callback: block)
       end
 
-      def guard_transition(options = { from: nil, to: nil }, &block)
-        from = to_s_or_nil(options[:from])
-        to   = to_s_or_nil(options[:to])
+      def guard_transition(options = { from: nil, to: nil, message: nil }, &block)
+        from    = to_s_or_nil(options[:from])
+        to      = to_s_or_nil(options[:to])
+        message = options[:message].to_s
 
         validate_callback_condition(from: from, to: to)
-        callbacks[:guards] << Guard.new(from: from, to: to, callback: block)
+        callbacks[:guards] << Guard.new(from: from, to: to, message: message, callback: block)
       end
 
       def validate_callback_condition(options = { from: nil, to: nil })

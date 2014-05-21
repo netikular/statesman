@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Statesman::Guard do
   let(:callback) { -> {} }
-  let(:guard) { Statesman::Guard.new(from: nil, to: nil, callback: callback) }
+  let(:guard) { Statesman::Guard.new(from: nil, to: nil, message: 'Guard Error', callback: callback) }
 
   specify { expect(guard).to be_a(Statesman::Callback) }
 
@@ -22,6 +22,11 @@ describe Statesman::Guard do
 
       it "raises an error" do
         expect { guard.call }.to raise_error(Statesman::GuardFailedError)
+      end
+
+      it "raises an error with a custom message" do
+        expect { guard.call }.to raise_error(Statesman::GuardFailedError)
+        expect { guard.call }.to raise_error("Guard Error")
       end
     end
   end
