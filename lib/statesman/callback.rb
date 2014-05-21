@@ -6,7 +6,7 @@ module Statesman
     attr_reader :to
     attr_reader :callback
 
-    def initialize(options = { from: nil, to: nil, message: nil, callback: nil })
+    def initialize(options = { from: nil, to: nil, callback: nil })
       unless options[:callback].respond_to?(:call)
         raise InvalidCallbackError, "No callback passed"
       end
@@ -14,7 +14,6 @@ module Statesman
       @from = options[:from]
       @to = options[:to]
       @callback = options[:callback]
-      @message = options[:message]
     end
 
     def call(*args)
