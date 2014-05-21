@@ -169,13 +169,14 @@ an array of states (`.transition(from: :some_state, to: [:another_state, :some_o
 
 #### `Machine.guard_transition`
 ```ruby
-Machine.guard_transition(from: :some_state, to: another_state) do |object|
+Machine.guard_transition(from: :some_state, to: another_state, message: 'optional') do |object|
   object.some_boolean?
 end
 ```
 Define a guard. `to` and `from` parameters are optional, a nil parameter means
 guard all transitions. The passed block should evaluate to a boolean and must
-be idempotent as it could be called many times.
+be idempotent as it could be called many times.  An optional message can be passed for error
+reporting that overrides the default "Guard failed" message.
 
 #### `Machine.before_transition`
 ```ruby
