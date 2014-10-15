@@ -7,17 +7,21 @@ module Statesman
 
       module ClassMethods
         def in_state(*states)
-          joins(transition_name)
+          includes(transition_name)
+            .joins(transition_name)
             .joins(transition_join)
             .where("#{transition_name}.to_state" => states.map(&:to_s))
             .where("transition2.id" => nil)
+            .references(transition_name)
         end
 
         def not_in_state(*states)
-          joins(transition_name)
+          includes(transition_name)
+            .joins(transition_name)
             .joins(transition_join)
             .where("#{transition_name}.to_state NOT IN (?)", states.map(&:to_s))
             .where("transition2.id" => nil)
+            .references(transition_name)
         end
 
         private
